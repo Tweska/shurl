@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>SHort URL - 2sk.nl</title>
+
+        <link rel="stylesheet" href="/static/css/normalize.css">
+        <link rel="stylesheet" href="/static/css/style.css">
+
+        <link rel="icon" type="image/png" sizes="16x16" href="/static/img/favicon-16x16.png">
+
+        <script src="/static/js/jquery.js"></script>
+    </head>
+    <body>
+        <div class="container flex-container flex-column">
+            <div class="logo">
+                <a href="https://2sk.nl/">
+                    <img src="/static/img/logo.png" alt="Logo">
+                </a>
+            </div>
+
+            <div class="app">
+                <form id="input" class="input flex-container flex-row">
+                    <input class="flex-item" type ="text" name="long-url" placeholder="Drop your link here...">
+                    <input class="flex-item" type="submit" value="Shorten!">
+                </form>
+                <div id="result" class="flex-container flex-row">
+                    <input class="flex-item" type ="text" name="short-url">
+                </div>
+            </div>
+        </div>
+
+        <script src="/static/js/api-calls.js"></script>
+    </body>
+</html>
