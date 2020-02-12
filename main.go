@@ -5,8 +5,6 @@ import (
 	"math/rand"
 	"net/http"
 	"time"
-
-	_ "github.com/mattn/go-sqlite3"
 )
 
 func main() {

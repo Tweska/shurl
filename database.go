@@ -1,6 +1,10 @@
 package main
 
-import "database/sql"
+import (
+	"database/sql"
+
+	_ "github.com/mattn/go-sqlite3"
+)
 
 func DBAddRedirection(url string) (Redirection, error) {
 	db, err := DBOpen()
