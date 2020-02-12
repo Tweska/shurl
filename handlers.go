@@ -1,7 +1,6 @@
 package main
 
 import (
-	"database/sql"
 	"fmt"
 	"html/template"
 	"net/http"
@@ -16,37 +15,21 @@ func index(w http.ResponseWriter, r *http.Request) {
 }
 
 func addRedirect(w http.ResponseWriter, r *http.Request) {
-	params := r.URL.Query()
-	fmt.Printf(params.Get("longURL"))
-
 	longURL := r.URL.Query().Get("longURL")
-	hash := randomString(5)
 
-	db, _ := sql.Open("sqlite3", "./redirections.db")
-	stmt, _ := db.Prepare("INSERT INTO redirections(hash, url) values(?, ?)")
-	stmt.Exec(hash, longURL)
+	redirection, _ := DBAddRedirection(longURL)
 
-	fmt.Fprintf(w, "localhost:8000/%s", hash)
-	db.Close()
+	fmt.Fprintf(w, "localhost:8000/%s", redirection.Hash)
 }
 
 func redirect(w http.ResponseWriter, r *http.Request) {
 	hash := mux.Vars(r)["hash"]
 
-	var url string
-
-	db, _ := sql.Open("sqlite3", "./redirections.db")
-	stmt, _ := db.Prepare("SELECT url FROM redirections WHERE hash == ?")
-	err := stmt.QueryRow(hash).Scan(&url)
-
-	fmt.Printf("%s\n", hash)
-	fmt.Printf("%s\n", url)
+	redirection, err := DBGetRedirection(hash)
 
 	if err != nil {
-		fmt.Println(err)
-		http.Redirect(w, r, "/", 404)
+		http.Redirect(w, r, "/", 501)
 	} else {
-		http.Redirect(w, r, url, 301)
+		http.Redirect(w, r, redirection.URL, 301)
 	}
-	db.Close()
 }
