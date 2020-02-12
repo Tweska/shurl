@@ -2,7 +2,8 @@ package main
 
 import "math/rand"
 
-func randomString(n int) string {
+// RandomString will return a random string with characters and numbers of the given length.
+func RandomString(n int) string {
 	letters := []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
 
 	randStr := make([]rune, n)

@@ -4,6 +4,7 @@ import (
 	"net/http"
 )
 
+// Route holds a single route used by the router.
 type Route struct {
 	Name        string
 	Method      string
@@ -11,6 +12,7 @@ type Route struct {
 	HandlerFunc http.HandlerFunc
 }
 
+// Routes is a list of routes.
 type Routes []Route
 
 var routes = Routes{
@@ -18,18 +20,18 @@ var routes = Routes{
 		"Index",
 		"GET",
 		"/",
-		index,
+		Index,
 	},
 	Route{
 		"AddRedirect",
 		"GET",
 		"/add/",
-		addRedirect,
+		AddRedirect,
 	},
 	Route{
 		"Redirect",
 		"GET",
 		"/{hash:[A-Za-z0-9]+}",
-		redirect,
+		Redirect,
 	},
 }

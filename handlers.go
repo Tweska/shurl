@@ -8,13 +8,15 @@ import (
 	"github.com/gorilla/mux"
 )
 
-func index(w http.ResponseWriter, r *http.Request) {
+// Index will display the index page.
+func Index(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("templates/index.html"))
 
 	tmpl.Execute(w, nil)
 }
 
-func addRedirect(w http.ResponseWriter, r *http.Request) {
+// AddRedirect will add a new redirection to the database and return the hash.
+func AddRedirect(w http.ResponseWriter, r *http.Request) {
 	longURL := r.URL.Query().Get("longURL")
 
 	redirection, _ := DBAddRedirection(longURL)
@@ -22,7 +24,8 @@ func addRedirect(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "localhost:8000/%s", redirection.Hash)
 }
 
-func redirect(w http.ResponseWriter, r *http.Request) {
+// Redirect will redirect the user to the url that corresponds to the hash.
+func Redirect(w http.ResponseWriter, r *http.Request) {
 	hash := mux.Vars(r)["hash"]
 
 	redirection, err := DBGetRedirection(hash)
