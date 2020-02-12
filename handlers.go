@@ -4,34 +4,10 @@ import (
 	"database/sql"
 	"fmt"
 	"html/template"
-	"log"
-	"math/rand"
 	"net/http"
-	"time"
 
 	"github.com/gorilla/mux"
-	_ "github.com/mattn/go-sqlite3"
 )
-
-func main() {
-	// Set the seed of the random number generator.
-	rand.Seed(time.Now().UnixNano())
-
-	// Create a file server.
-	fileServer := http.FileServer(http.Dir("static/"))
-
-	// Create a router and set all the routing rules.
-	router := mux.NewRouter().StrictSlash(true)
-
-	router.PathPrefix("/static/").Handler(http.StripPrefix("/static/", fileServer))
-
-	router.HandleFunc("/", index)
-	router.HandleFunc("/add/", addRedirect)
-	router.HandleFunc("/{hash:[A-Za-z0-9]+}", redirect)
-
-	// Start listening for incomming requests.
-	log.Fatal(http.ListenAndServe(":8000", router))
-}
 
 func index(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("templates/index.html"))
